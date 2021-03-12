@@ -1,7 +1,7 @@
 from ecommerce.classes.Ecommerce import Loja
 from ecommerce.classes.Cliente import Cliente
 from ecommerce.classes.Pedido import Pedido
-import pytest
+
 
 class TestEcommerce:
     def test_class_declared(self):
@@ -17,7 +17,7 @@ class TestEcommerce:
         assert objeto.nome == 'Lojão Tabajara'
         objeto.nome = 'Lojão Tabajara Centro'
         assert objeto.nome == 'Lojão Tabajara Centro'
-        assert objeto.estoque  == []
+        assert objeto.estoque == []
 
     def test_str_repr(self):
         objeto = Loja('Lojão Tabajara')

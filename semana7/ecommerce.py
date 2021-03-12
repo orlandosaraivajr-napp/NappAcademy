@@ -1,7 +1,7 @@
 from ecommerce.classes.Pedido import Pedido
-from ecommerce.classes.Produto import Produto
 from ecommerce.classes.Cliente import Cliente
-from ecommerce.classes.Ecommerce import Loja 
+from ecommerce.classes.Ecommerce import Loja
+
 
 loja = Loja('Loja Napp')
 loja.add_estoque('123', 15, 10)

@@ -1,8 +1,10 @@
 from ecommerce.classes.Cliente import Cliente
 from ecommerce.classes.Produto import Produto
 
+
 class Pedido:
     formas_aceitas = ['dinheiro', 'cartão', 'pix']
+
     def __init__(self, cliente):
         if isinstance(cliente, Cliente):
             self._cliente = cliente

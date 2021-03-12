@@ -1,10 +1,10 @@
 class Produto:
     def __init__(self, **kwargs):
-        if kwargs.get('preco',0) < 0:
+        if kwargs.get('preco', 0) < 0:
             raise ValueError('Preço negativo')
         self._codigo_ean = kwargs.get('ean', '')
-        self._preco =  kwargs.get('preco', 0)
-    
+        self._preco = kwargs.get('preco', 0)
+
     @property
     def preco(self):
         return self._preco

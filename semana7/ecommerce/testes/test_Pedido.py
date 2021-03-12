@@ -3,6 +3,7 @@ from ecommerce.classes.Cliente import Cliente
 from ecommerce.classes.Produto import Produto
 import pytest
 
+
 class TestPedido:
     def test_class_declared(self):
         cliente = Cliente('José da Silva')
@@ -57,7 +58,7 @@ class TestPedido:
         assert pedido.quantidade_produto_no_pedido('123') == 3
         assert pedido.quantidade_produto_no_pedido('123546') == 1
         assert pedido.quantidade_produto_no_pedido('9999') == 0
-        
+
     def test_nota_fiscal(self):
         cliente = Cliente('José da Silva')
         pedido = Pedido(cliente)

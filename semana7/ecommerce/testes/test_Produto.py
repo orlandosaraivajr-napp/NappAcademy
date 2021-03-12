@@ -1,11 +1,12 @@
 from ecommerce.classes.Produto import Produto
 import pytest
 
+
 class TestProduto:
     def test_class_declared(self):
         objeto = Produto()
         assert isinstance(objeto, Produto)
-        
+
     def test_instanciar_objeto_somente_ean(self):
         objeto = Produto(ean='12345678911')
         assert objeto.ean, '12345678911'

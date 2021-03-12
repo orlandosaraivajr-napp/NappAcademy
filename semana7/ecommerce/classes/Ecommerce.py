@@ -1,6 +1,7 @@
 from ecommerce.classes.Produto import Produto
 from ecommerce.classes.Pedido import Pedido
 
+
 class Loja:
     def __init__(self, nome):
         self._nome = nome

@@ -11,8 +11,7 @@ class Cliente:
         self._name = value
 
     def __str__(self):
-        return self._name 
-    
+        return self._name
+
     def __repr__(self):
-        return 'Cliente => ' + self._name 
-    
+        return 'Cliente => ' + self._name

@@ -1,5 +1,5 @@
 from ecommerce.classes.Cliente import Cliente
-import pytest
+
 
 class TestCliente:
     def test_class_declared(self):
