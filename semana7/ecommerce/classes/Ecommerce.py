@@ -1,4 +1,5 @@
 from ecommerce.classes.Produto import Produto
+from ecommerce.classes.Pedido import Pedido
 
 class Loja:
     def __init__(self, nome):
@@ -40,3 +41,11 @@ class Loja:
                 self._estoque.remove(produto)
                 return produto
         return None
+
+    def devolver_carrinho(self, pedido):
+        if isinstance(pedido, Pedido):
+            for item in pedido.itens:
+                if isinstance(item, Produto):
+                    self._estoque.append(item)
+            pedido.itens = []
+            return pedido

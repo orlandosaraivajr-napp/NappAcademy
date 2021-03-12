@@ -1,4 +1,6 @@
 from ecommerce.classes.Ecommerce import Loja
+from ecommerce.classes.Cliente import Cliente
+from ecommerce.classes.Pedido import Pedido
 import pytest
 
 class TestEcommerce:
@@ -63,3 +65,19 @@ class TestEcommerce:
         assert len(loja.estoque) == 0
         assert loja.comprar('123') is None
 
+    def test_devolver_carrinho(self):
+        loja = Loja('Lojão Tabajara')
+        loja.add_estoque('123', 15, 10)
+        loja.add_estoque('1234', 20, 5)
+        assert len(loja.estoque) == 15
+        cliente = Cliente('John Doe')
+        pedido = Pedido(cliente)
+        pedido.add_item(loja.comprar('1234'))
+        pedido.add_item(loja.comprar('123'))
+        assert len(pedido.itens) == 2
+        assert len(loja.estoque) == 13
+        assert loja.quantidade_produtos('1234') == 4
+        assert loja.quantidade_produtos('123') == 9
+        loja.devolver_carrinho(pedido)
+        assert len(pedido.itens) == 0
+        assert len(loja.estoque) == 15

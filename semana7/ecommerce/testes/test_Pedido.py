@@ -99,3 +99,11 @@ class TestPedido:
             pedido.add_item(produto1)
             pedido.checkout('marcar')
         assert str(error.value) == msg_erro
+
+    def test_checkout_fail2(self):
+        msg_erro = 'Informe um meio de pagamento'
+        with pytest.raises(Exception) as error:
+            pedido = Pedido(Cliente('José da Silva'))
+            pedido.add_item(Produto(ean='123', preco=10))
+            pedido.checkout()
+        assert str(error.value) == msg_erro

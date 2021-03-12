@@ -58,7 +58,9 @@ class Pedido:
             total_pagar = total_pagar + produto.preco
         return total_pagar
 
-    def checkout(self, forma_pagamento):
+    def checkout(self, forma_pagamento=None):
+        if forma_pagamento is None:
+            raise Exception('Informe um meio de pagamento')
         if forma_pagamento.lower() in self.__class__.formas_aceitas:
             dados_checkout = (self.nota_fiscal(), self.valor_total_pagar())
             return dados_checkout
