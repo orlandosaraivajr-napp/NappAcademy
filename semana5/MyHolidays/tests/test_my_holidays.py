@@ -38,6 +38,7 @@ class TestMyCalendar:
         objeto = MyCalendar(dt1, dt2)
         assert len(objeto.datas) == tamanho_lista
         assert isinstance(objeto.datas[0], date)
+        print(objeto.datas)
 
     def test_receive_bad_formatted_strings(self):
         """
