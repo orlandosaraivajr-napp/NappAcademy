@@ -33,7 +33,6 @@ class Conta:
         if isinstance(valor, (float, int)):
             if valor > (self.saldo + self.limite):
                 raise ValueError('Valor do saque supera seu saldo e seu limite')
-                return
             self.saldo = self.saldo - valor
             self.extrato.append(('S', valor))
             return valor

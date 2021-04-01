@@ -11,7 +11,6 @@ class ContaPoupanca(Conta):
         if isinstance(valor, (float, int)):
             if valor > (self.saldo):
                 raise ValueError('Valor do saque supera seu saldo.')
-                return
             self.saldo = self.saldo - valor
             self.extrato.append(('S', valor))
             return valor
