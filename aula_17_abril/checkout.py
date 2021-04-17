@@ -1,23 +1,42 @@
 class CheckoutStrategy:
     def calculo(self, valor_compra, dados):
-        if dados.cartao == 'ouro' and dados.profissao == 'professor':
-            return valor_compra * 0.5
-        if dados.profissao == 'professor':
-            return valor_compra * 0.9
-        if dados.profissao == 'estudante':
-            return valor_compra * 0.5
-        if dados.cartao == 'ouro':
-            return valor_compra * 0.75
-        if dados.cupom == 'napp2021':
-            return valor_compra * 0.7
-        if dados.cupom == 'napp21':
-            return valor_compra * 0.8
+        return valor_compra
+
+class Cliente_outro_Strategy(CheckoutStrategy):
+    def calculo(self, valor_compra, dados):
+        return valor_compra * 0.75
+    
+class Cliente_estudante_Strategy(CheckoutStrategy):
+    def calculo(self, valor_compra, dados):
+        return valor_compra * 0.5
+
+class Cliente_professor_Strategy(CheckoutStrategy):
+    def calculo(self, valor_compra, dados):
+        return valor_compra * 0.9
+    
+class Cliente_ouro_professor_Strategy(CheckoutStrategy):
+    def calculo(self, valor_compra, dados):
+        return valor_compra * 0.5
+
+class cupom_napp_2121_Strategy(CheckoutStrategy):
+    def calculo(self, valor_compra, dados):
+        return valor_compra * 0.7
+    
+class cupom_napp_21_Strategy(CheckoutStrategy):
+    def calculo(self, valor_compra, dados):
+        return valor_compra * 0.8
+    
+class SemDescontoStrategy(CheckoutStrategy):
+    def calculo(self, valor_compra, dados):
         return valor_compra
 
 class CarrinhoCompra:
-    def checkout(self, valor_compra, dados):
-        checkout = CheckoutStrategy()
-        return checkout.calculo(valor_compra, dados)
+    def checkout(self, valor_compra, dados, estrategia):
+        if issubclass(type(estrategia), CheckoutStrategy):
+            return estrategia.calculo(valor_compra, dados)
+        else:
+            return 'Deu ruim'
+
 
 class DadosCliente:
     def __init__(self):
@@ -52,19 +71,33 @@ class DadosCliente:
 
 carrinho = CarrinhoCompra()
 dados = DadosCliente()
-assert(carrinho.checkout(1000, dados) == 1000)
+estrategia = 'String não estratégia'
+assert(carrinho.checkout(1000, dados, estrategia) == 'Deu ruim')
+
+
+
+estrategia = SemDescontoStrategy()
+dados.cartao = 'ouro'
 dados.profissao = 'professor'
-assert(carrinho.checkout(1000, dados) == 900)
+estrategia = Cliente_ouro_professor_Strategy()
+assert(carrinho.checkout(1000, dados, estrategia) == 500)
+estrategia = SemDescontoStrategy()
+assert(carrinho.checkout(1000, dados, estrategia) == 1000)
+estrategia = Cliente_professor_Strategy()
+dados.profissao = 'professor'
+assert(carrinho.checkout(1000, dados, estrategia) == 900)
 dados.profissao = 'estudante'
-assert(carrinho.checkout(1000, dados) == 500)
+estrategia = Cliente_estudante_Strategy()
+assert(carrinho.checkout(1000, dados, estrategia) == 500)
 dados.profissao = None
 dados.cupom = 'napp2021'
-assert(carrinho.checkout(1000, dados) == 700)
+estrategia = cupom_napp_2121_Strategy()
+assert(carrinho.checkout(1000, dados, estrategia) == 700)
 dados.cupom = 'napp21'
-assert(carrinho.checkout(1000, dados) == 800)
+estrategia = cupom_napp_21_Strategy()
+assert(carrinho.checkout(1000, dados, estrategia) == 800)
 dados.cupom = None
 dados.cartao = 'ouro'
-assert(carrinho.checkout(1000, dados) == 750)
-dados.cartao = 'ouro'
-dados.profissao = 'professor'
-assert(carrinho.checkout(1000, dados) == 500)
+estrategia = Cliente_outro_Strategy()
+assert(carrinho.checkout(1000, dados, estrategia) == 750)
+
