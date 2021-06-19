@@ -1,0 +1,65 @@
+Consulta realizada em: 
+
+https://docs.djangoproject.com/pt-br/2.2/_modules/django/contrib/auth/decorators/
+
+-------------------------------------------------------------------------------------------------------------------
+Exemplo 01
+-------------------------------------------------------------------------------------------------------------------
+def login_required(function=None, redirect_field_name=REDIRECT_FIELD_NAME, login_url=None):
+    actual_decorator = user_passes_test(
+        lambda u: u.is_authenticated,
+        login_url=login_url,
+        redirect_field_name=redirect_field_name
+    )
+    if function:
+        return actual_decorator(function)
+    return actual_decorator
+
+@login_required
+def my_view(request)
+    ...
+
+Explicação do decorator:
+
+Caso o usuário que estiver tentando acessar a view não estiver logado, ele será redirecionado para a página de login, que pode ser passada por default em REDIRECT_FIELD_NAME. Acredito que seja uma variável
+de ambiente ou uma variável presente em algum arquivo de configuração local.
+Se o usuário está autenticado, executa a “view” normalmente. O código da “view” é livre para assumir que o usuário está autenticado.
+
+-------------------------------------------------------------------------------------------------------------------
+Exemplo 02
+-------------------------------------------------------------------------------------------------------------------
+def superuser_only(function):
+   def _inner(request, *args, **kwargs):
+       if not request.user.is_superuser:
+           raise PermissionDenied           
+       return function(request, *args, **kwargs)
+   return _inner
+
+@superuser_only
+def my_view(request):
+    ...
+
+Explicação do decorator:
+
+Esse decorator não permitirá que usuários que não sejam um super usuário, que pode ser um tipo de objeto de usuário específico ou algo do tipo.
+
+-------------------------------------------------------------------------------------------------------------------
+Exemplo 03
+-------------------------------------------------------------------------------------------------------------------
+def timeit(method):
+   def timed(*args, **kw):
+       ts = time.time()
+       result = method(*args, **kw)
+       te = time.time()
+       print('%r (%r, %r) %2.2f sec' % (method.__name__, args, kw, te - ts))
+       return result
+
+   return timed
+
+@timeit
+def my_view(request):
+    ...
+
+Explicação do decorator:
+
+Esse decorator apenas irá calcular o tempo de resposta apartir do momento da view ser chamada, até o final da execução de sua execução.
